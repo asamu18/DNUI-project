@@ -1,0 +1,23 @@
+# Maven build output
+nep-backend/target/
+
+# IDE files
+.idea/
+*.iml
+.vscode/
+.settings/
+.project
+.classpath
+
+# Node.js
+node_modules/
+dist/
+.vite/
+*.local
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
