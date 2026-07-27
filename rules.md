@@ -48,6 +48,19 @@
 - SpringBoot 3.x 生态
 - 连接：`root` / `root`，库名 `nep`
 
+### 1.4 合并与分支（禁止覆盖已有源码）
+
+- **合并前必须检查 diff / 文件清单**：重点看 `Deleted`、`Renamed`，确认没有误删仍在使用的模块
+- **四大前端目录相互独立，禁止互相覆盖或改名吞并**：
+  - `nep-frontend-neps/`（公众监督员，8081）
+  - 网格员端（NEPG，8082；目录以实际落地为准）
+  - `nep-frontend-nepm/`（管理员，8083）
+  - `nep-frontend-nepv/`（决策大屏，8084）
+- **禁止**用「删掉旧前端再上传新前端」的方式合入；新模块应**新增目录**，不得清空其他端已有 `src/`
+- 合并冲突时优先**保留两侧有效代码**，不要为了省事直接 accept 整目录删除
+- 合入后立刻核对：各端 `package.json` / `src/` / 关键页面是否仍在；缺了必须从历史提交恢复后再继续
+- 典型反例（已发生过）：合入管理员端时把 `nep-frontend-neps` 源码删光，仅剩空目录 / `node_modules`
+
 ---
 
 ## 2. 行为规范
@@ -218,6 +231,10 @@ AQI_LEVEL = MAX(SO2_LEVEL, CO_LEVEL, SPM_LEVEL)
 - 发现 2：外部 Navicat 导出（nep 2.sql）曾出现 `grid_city` 空表；权威库必须保留完整 city 种子数据
 - 发现 3：历史 seed 中部分 `statistics.fd_id` 与同地址反馈的 `tel_id` 不一致，回填 `af_id` 优先按 `address(+information)` 匹配
 - 已确认：网格员提交实测时必须写 `af_id`（反馈单号）+ `fd_id`（监督员电话）+ `spm_value`
+
+## [2026-07-27] 合入管理员端误删 NEPS 源码
+- 发现：PR 合入时将 `nep-frontend-neps` 整目录删除并改名/替换为 `nep-frontend-nepm`，监督员端源码丢失（后已从历史提交恢复）
+- 已确认：写入第 1.4 节硬约束——合并必须检查 Deleted/Renamed，四大前端目录禁止互相覆盖
 
 ---
 
