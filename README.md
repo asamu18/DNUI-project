@@ -7,7 +7,7 @@
 | 模块 | 目录 | 端口 | 状态 |
 |---|---|---|---|
 | 后端 API | `nep-backend/` | 8080 | 已接入 |
-| 公众监督员端（NEPS） | `nep-frontend-neps/` | 8081 | 源码待恢复（合并时被覆盖，仅残留 `node_modules`） |
+| 公众监督员端（NEPS） | `nep-frontend-neps/` | 8081 | 已接入 |
 | 网格员端（NEPG） | — | 8082 | 开发中（见 [PR #2](https://github.com/asamu18/DNUI-project/pull/2)） |
 | 系统管理员端（NEPM） | `nep-frontend-nepm/` | 8083 | 已接入 |
 | 决策者大屏（NEPV） | `nep-frontend-nepv/` | 8084 | 已接入 |
@@ -22,6 +22,7 @@
 ## 技术栈
 
 - **后端**：JDK 17+、Spring Boot 3.x、MyBatis-Plus、Druid、MySQL 8  
+- **公众监督员端**：Vue 3、Vite、Vue Router、Pinia、Axios、Vant 4  
 - **管理员端 / 决策大屏**：Vue 3、Vite、Vue Router、Pinia、Axios、Element Plus、ECharts  
 - **协作文档**：`rules.md`、`docs/api-list.md`
 
@@ -65,7 +66,18 @@ curl http://localhost:8080/api/test/hello
 curl http://localhost:8080/api/statistics/realTimeCount
 ```
 
-### 4. 启动管理员端（NEPM）
+### 4. 启动公众监督员端（NEPS）
+
+```bash
+cd nep-frontend-neps
+npm install
+npm run dev
+```
+
+访问：http://localhost:8081  
+（开发环境通过 Vite 将 `/api` 代理到 `http://localhost:8080`）
+
+### 5. 启动管理员端（NEPM）
 
 ```bash
 cd nep-frontend-nepm
@@ -76,7 +88,7 @@ npm run dev
 访问：http://localhost:8083  
 账号：`admin` / `123`
 
-### 5. 启动决策者大屏（NEPV）
+### 6. 启动决策者大屏（NEPV）
 
 ```bash
 cd nep-frontend-nepv
@@ -107,9 +119,9 @@ DNUI-project/
 │       ├── nep.sql                   # 官方库（权威）
 │       ├── patch_statistics_af_id.sql# 已有库升级补丁
 │       ├── init.sql / seed.sql       # 旧脚手架（已过时）
+├── nep-frontend-neps/                # 公众监督员端
 ├── nep-frontend-nepm/                # 系统管理员端
 ├── nep-frontend-nepv/                # 决策者大屏
-├── nep-frontend-neps/                # 公众监督员端（源码待恢复）
 ├── docs/
 │   └── api-list.md                   # 接口清单
 ├── rules.md                          # 团队 / AI 开发硬约束
@@ -134,6 +146,7 @@ DNUI-project/
 | [rules.md](./rules.md) | 字段命名、接口契约、AQI 规则、安全约定 |
 | [docs/api-list.md](./docs/api-list.md) | 已实现 / 规划中接口清单 |
 | [nep-backend/README.md](./nep-backend/README.md) | 后端启动与结构说明 |
+| [nep-frontend-neps/README.md](./nep-frontend-neps/README.md) | NEPS 前端启动与流程说明 |
 | [nep-frontend-nepv/README.md](./nep-frontend-nepv/README.md) | 决策大屏启动说明 |
 | [wbs.html](./wbs.html) | 项目 WBS |
 
