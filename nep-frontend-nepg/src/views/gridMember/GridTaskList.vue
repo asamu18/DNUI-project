@@ -62,7 +62,7 @@
 
         <el-table-column
           label="操作"
-          width="120"
+          width="220"
         >
 
           <template #default="scope">
@@ -73,6 +73,15 @@
               @click="goDetail(scope.row.afId)"
             >
               查看
+            </el-button>
+
+            <el-button
+              v-if="scope.row.state === 1"
+              type="success"
+              size="small"
+              @click="goDetect(scope.row.afId)"
+            >
+              去检测
             </el-button>
 
           </template>
@@ -130,6 +139,14 @@ function goDetail(id){
 
   router.push(
     `/grid/detail/${id}`
+  )
+
+}
+
+function goDetect(id){
+
+  router.push(
+    `/grid/submit/${id}`
   )
 
 }

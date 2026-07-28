@@ -1,6 +1,18 @@
 <template>
-  <div class="page">
-    <NavBar title="选择网格" right-text="历史" @click-right="$router.push('/history')" />
+  <div class="nep-page">
+    <NavBar
+      title="选择网格"
+      :show-back="false"
+      right-text="历史"
+      show-logout
+      @click-right="$router.push('/history')"
+    />
+
+    <div class="welcome">
+      <div class="welcome-title">选择监督网格</div>
+      <div class="welcome-sub">请选择省 / 市区域后继续填写空气质量反馈</div>
+    </div>
+
     <van-cell-group inset>
       <van-field
         v-model="provinceName"
@@ -21,8 +33,9 @@
       />
     </van-cell-group>
 
-    <div class="actions">
+    <div class="nep-actions">
       <van-button
+        class="nep-primary-btn"
         round
         block
         type="primary"
@@ -140,11 +153,22 @@ function goNext() {
 </script>
 
 <style scoped>
-.page {
-  min-height: 100vh;
-  background: #f7f8fa;
+.welcome {
+  margin: 16px;
+  padding: 20px 18px;
+  border-radius: 14px;
+  color: #fff;
+  background: linear-gradient(135deg, #1b5e20 0%, #2e7d32 40%, #43a047 100%);
+  box-shadow: 0 6px 20px rgba(27, 94, 32, 0.2);
 }
-.actions {
-  margin: 24px 16px;
+.welcome-title {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+.welcome-sub {
+  margin-top: 6px;
+  font-size: 13px;
+  opacity: 0.9;
 }
 </style>

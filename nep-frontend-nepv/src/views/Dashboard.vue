@@ -113,6 +113,14 @@
             <EChart :option="coBarOption" height="100%" />
           </div>
         </div>
+        <div class="card">
+          <div class="card-header">
+            <span class="card-title">AQI空气质量等级超标累计</span>
+          </div>
+          <div class="card-body">
+            <EChart :option="aqiBarOption" height="100%" />
+          </div>
+        </div>
       </section>
     </main>
   </div>
@@ -243,6 +251,17 @@ const coBarOption = computed(() => {
     sorted.map(i => i.coExceed),
     sorted.map(i => plateAbbr(i.provinceName)),
     { color: '#ab47bc', rotate: 0 }
+  )
+})
+
+const aqiBarOption = computed(() => {
+  const sorted = [...rawData.provinceExceed]
+    .sort((a, b) => b.aqiExceed - a.aqiExceed)
+    .slice(0, 10)
+  return createBarChart('',
+    sorted.map(i => i.aqiExceed),
+    sorted.map(i => plateAbbr(i.provinceName)),
+    { color: '#ff5252', rotate: 0 }
   )
 })
 
@@ -411,7 +430,7 @@ onBeforeUnmount(() => {
 
 .col-right {
   display: grid;
-  grid-template-rows: repeat(3, 1fr);
+  grid-template-rows: repeat(4, 1fr);
   gap: 10px;
 }
 

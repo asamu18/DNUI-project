@@ -1,6 +1,14 @@
 <template>
-  <div class="page">
-    <NavBar title="注册" :show-back="false" />
+  <div class="nep-page">
+    <NavBar title="注册" />
+    <div class="intro">
+      <BrandLogo size="sm" />
+      <div>
+        <div class="intro-title">创建监督员账号</div>
+        <div class="intro-sub">加入东软环保公众监督系统</div>
+      </div>
+    </div>
+
     <van-form @submit="onSubmit">
       <van-cell-group inset>
         <van-field
@@ -69,11 +77,18 @@
         />
       </van-cell-group>
 
-      <div class="actions">
-        <van-button round block type="primary" native-type="submit" :loading="loading">
-          注册
+      <div class="nep-actions">
+        <van-button
+          class="nep-primary-btn"
+          round
+          block
+          type="primary"
+          native-type="submit"
+          :loading="loading"
+        >
+          注 册
         </van-button>
-        <div class="link" @click="$router.push('/login')">已有账号？去登录</div>
+        <div class="nep-link" @click="$router.push('/login')">已有账号？去登录</div>
       </div>
     </van-form>
   </div>
@@ -84,6 +99,7 @@ import { reactive, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { showToast } from 'vant'
 import NavBar from '../components/NavBar.vue'
+import BrandLogo from '../components/BrandLogo.vue'
 import { checkPhone, register } from '../api/supervisor'
 
 const router = useRouter()
@@ -146,18 +162,25 @@ async function onSubmit() {
 </script>
 
 <style scoped>
-.page {
-  min-height: 100vh;
-  background: #f7f8fa;
-  padding-bottom: 24px;
+.intro {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 16px;
+  padding: 14px 16px;
+  background: #fff;
+  border: 1px solid var(--nep-border);
+  border-radius: 14px;
+  box-shadow: var(--nep-card-shadow);
 }
-.actions {
-  margin: 24px 16px;
+.intro-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--nep-text);
 }
-.link {
-  margin-top: 16px;
-  text-align: center;
-  color: #1989fa;
-  font-size: 14px;
+.intro-sub {
+  margin-top: 2px;
+  font-size: 12px;
+  color: var(--nep-text-muted);
 }
 </style>

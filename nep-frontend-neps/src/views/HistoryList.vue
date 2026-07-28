@@ -1,27 +1,27 @@
 <template>
-  <div class="page">
-    <NavBar title="历史反馈" back-to="/selectGrid" />
+  <div class="nep-page">
+    <NavBar title="历史反馈" back-to="/selectGrid" show-logout />
 
     <van-pull-refresh v-model="refreshing" @refresh="loadData">
       <van-empty v-if="!loading && !list.length" description="暂无反馈记录" />
-      <van-cell-group v-else inset>
-        <van-cell
-          v-for="item in list"
-          :key="item.id"
-          :title="`${item.provinceName || ''}-${item.cityName || ''}`"
-          :label="formatDesc(item)"
-          :value="formatTime(item.feedbackTime)"
-        >
-          <template #icon>
+      <div v-else class="list">
+        <div v-for="item in list" :key="item.id" class="item-card">
+          <div class="item-top">
             <span
               class="level-tag"
               :style="{ background: getAqiInfo(item.estimatedLevel).color }"
             >
               {{ getAqiInfo(item.estimatedLevel).grade }}
             </span>
-          </template>
-        </van-cell>
-      </van-cell-group>
+            <span class="region-text">
+              {{ item.provinceName || '' }}-{{ item.cityName || '' }}
+            </span>
+            <span class="time">{{ formatTime(item.feedbackTime) }}</span>
+          </div>
+          <div class="item-meta">{{ item.status || '' }}</div>
+          <div class="item-desc">{{ item.feedbackDesc || '无描述' }}</div>
+        </div>
+      </div>
     </van-pull-refresh>
   </div>
 </template>
@@ -63,12 +63,6 @@ async function loadData() {
   }
 }
 
-function formatDesc(item) {
-  const desc = item.feedbackDesc || ''
-  const short = desc.length > 30 ? `${desc.slice(0, 30)}...` : desc
-  return `${item.status || ''} · ${short}`
-}
-
 function formatTime(t) {
   if (!t) return ''
   return String(t).replace('T', ' ').slice(0, 16)
@@ -76,19 +70,52 @@ function formatTime(t) {
 </script>
 
 <style scoped>
-.page {
-  min-height: 100vh;
-  background: #f7f8fa;
-  padding-bottom: 16px;
+.list {
+  padding: 8px 16px 16px;
+}
+.item-card {
+  margin-bottom: 12px;
+  padding: 14px 16px;
+  background: #fff;
+  border: 1px solid var(--nep-border);
+  border-radius: 14px;
+  box-shadow: var(--nep-card-shadow);
+}
+.item-top {
+  display: flex;
+  align-items: center;
+  gap: 8px;
 }
 .level-tag {
   display: inline-block;
   min-width: 48px;
-  margin-right: 8px;
-  padding: 2px 6px;
-  border-radius: 4px;
+  padding: 2px 8px;
+  border-radius: 6px;
   color: #111;
   font-size: 12px;
+  font-weight: 600;
   text-align: center;
+}
+.region-text {
+  flex: 1;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--nep-text);
+}
+.time {
+  font-size: 12px;
+  color: var(--nep-text-muted);
+}
+.item-meta {
+  margin-top: 8px;
+  font-size: 12px;
+  color: var(--nep-primary-mid);
+  font-weight: 600;
+}
+.item-desc {
+  margin-top: 6px;
+  font-size: 13px;
+  color: #606266;
+  line-height: 1.5;
 }
 </style>

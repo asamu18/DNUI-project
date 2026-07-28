@@ -1,7 +1,7 @@
 <template>
-  <div class="page">
-    <NavBar title="提交反馈" />
-    <div class="region">反馈：{{ provinceName }}-{{ cityName }}</div>
+  <div class="nep-page">
+    <NavBar title="提交反馈" show-logout />
+    <div class="region">反馈区域：{{ provinceName }} - {{ cityName }}</div>
 
     <van-cell-group inset>
       <van-field
@@ -12,7 +12,7 @@
       />
     </van-cell-group>
 
-    <div class="section-title">AQI 等级参考</div>
+    <div class="nep-section-title">AQI 等级参考</div>
     <van-cell-group inset>
       <van-cell
         v-for="item in levels"
@@ -26,7 +26,7 @@
       </van-cell>
     </van-cell-group>
 
-    <div class="section-title">预估等级</div>
+    <div class="nep-section-title">预估等级</div>
     <van-radio-group v-model="estimatedLevel" class="level-group">
       <van-cell-group inset>
         <van-cell
@@ -56,8 +56,9 @@
       />
     </van-cell-group>
 
-    <div class="actions">
+    <div class="nep-actions">
       <van-button
+        class="nep-primary-btn"
         round
         block
         type="primary"
@@ -65,7 +66,7 @@
         :loading="loading"
         @click="onSubmit"
       >
-        提交
+        提 交
       </van-button>
     </div>
   </div>
@@ -138,23 +139,14 @@ async function onSubmit() {
 </script>
 
 <style scoped>
-.page {
-  min-height: 100vh;
-  background: #f7f8fa;
-  padding-bottom: 24px;
-}
 .region {
   margin: 12px 16px;
-  padding: 12px;
-  background: #ecf9ff;
-  border-radius: 8px;
-  color: #1989fa;
-  font-weight: 500;
-}
-.section-title {
-  margin: 16px 16px 8px;
-  font-size: 14px;
-  color: #969799;
+  padding: 12px 14px;
+  background: var(--nep-primary-soft);
+  border: 1px solid #c8e6c9;
+  border-radius: 12px;
+  color: var(--nep-primary-mid);
+  font-weight: 600;
 }
 .color-dot {
   display: inline-block;
@@ -168,8 +160,5 @@ async function onSubmit() {
 }
 .desc-group {
   margin-top: 12px;
-}
-.actions {
-  margin: 24px 16px;
 }
 </style>

@@ -1,0 +1,91 @@
+/* NEPS 品牌主题 — 对齐 NEPM 绿色体系 */
+:root {
+  --nep-primary: #43a047;
+  --nep-primary-mid: #2e7d32;
+  --nep-primary-dark: #1b5e20;
+  --nep-primary-light: #6ed080;
+  --nep-primary-soft: #e8f5e9;
+  --nep-bg: #f4f7f4;
+  --nep-shell: #ffffff;
+  --nep-text: #1a1a2e;
+  --nep-text-muted: #909399;
+  --nep-border: #eef3ee;
+  --nep-card-shadow: 0 2px 12px rgba(27, 94, 32, 0.06);
+  --nep-gradient: linear-gradient(135deg, #43a047 0%, #2e7d32 55%, #1b5e20 100%);
+
+  /* Vant：只用纯色变量，避免 gradient 被后加载样式冲掉后变成白按钮 */
+  --van-primary-color: #43a047;
+  --van-success-color: #2e7d32;
+  --van-button-primary-color: #ffffff;
+  --van-button-primary-background: #43a047;
+  --van-button-primary-border-color: #2e7d32;
+  --van-radio-checked-icon-color: #43a047;
+  --van-switch-on-background: #43a047;
+  --van-dialog-confirm-button-text-color: #2e7d32;
+}
+
+.nep-page {
+  min-height: 100vh;
+  background: var(--nep-bg);
+  padding-bottom: 24px;
+}
+
+.nep-card {
+  margin: 12px 16px;
+  padding: 16px;
+  background: #fff;
+  border: 1px solid var(--nep-border);
+  border-radius: 14px;
+  box-shadow: var(--nep-card-shadow);
+}
+
+.nep-actions {
+  margin: 24px 16px;
+}
+
+.nep-link {
+  margin-top: 16px;
+  text-align: center;
+  color: var(--nep-primary-mid);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.nep-section-title {
+  margin: 16px 16px 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--nep-text-muted);
+}
+
+/* 强制主按钮为醒目绿色（覆盖 Vant 组件样式后注入） */
+.van-button--primary,
+.nep-primary-btn.van-button--primary {
+  color: #ffffff !important;
+  background: #43a047 !important;
+  background-image: linear-gradient(135deg, #43a047 0%, #2e7d32 55%, #1b5e20 100%) !important;
+  border: 1px solid #2e7d32 !important;
+  box-shadow: 0 8px 18px rgba(46, 125, 50, 0.32);
+  font-weight: 700 !important;
+  letter-spacing: 2px;
+}
+
+.van-button--primary .van-button__text,
+.van-button--primary .van-button__content {
+  color: #ffffff !important;
+}
+
+.van-button--primary:active {
+  opacity: 0.92;
+}
+
+.van-button--primary.van-button--disabled,
+.van-button--primary:disabled {
+  color: #ffffff !important;
+  background: #81c784 !important;
+  background-image: none !important;
+  border-color: #81c784 !important;
+  box-shadow: none;
+  opacity: 1 !important;
+}
