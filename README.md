@@ -8,7 +8,7 @@
 |---|---|---|---|
 | 后端 API | `nep-backend/` | 8080 | 已接入 |
 | 公众监督员端（NEPS） | `nep-frontend-neps/` | 8081 | 已接入 |
-| 网格员端（NEPG） | — | 8082 | 开发中（见 [PR #2](https://github.com/asamu18/DNUI-project/pull/2)） |
+| 网格员端（NEPG） | `nep-frontend-nepg/` | 8082 | 已接入 |
 | 系统管理员端（NEPM） | `nep-frontend-nepm/` | 8083 | 已接入 |
 | 决策者大屏（NEPV） | `nep-frontend-nepv/` | 8084 | 已接入 |
 
@@ -23,7 +23,7 @@
 
 - **后端**：JDK 17+、Spring Boot 3.x、MyBatis-Plus、Druid、MySQL 8  
 - **公众监督员端**：Vue 3、Vite、Vue Router、Pinia、Axios、Vant 4  
-- **管理员端 / 决策大屏**：Vue 3、Vite、Vue Router、Pinia、Axios、Element Plus、ECharts  
+- **网格员端 / 管理员端 / 决策大屏**：Vue 3、Vite、Vue Router、Pinia、Axios、Element Plus、ECharts  
 - **协作文档**：`rules.md`、`docs/api-list.md`
 
 ## 快速开始
@@ -77,7 +77,18 @@ npm run dev
 访问：http://localhost:8081  
 （开发环境通过 Vite 将 `/api` 代理到 `http://localhost:8080`）
 
-### 5. 启动管理员端（NEPM）
+### 5. 启动网格员端（NEPG）
+
+```bash
+cd nep-frontend-nepg
+npm install
+npm run dev
+```
+
+访问：http://localhost:8082  
+账号：`caocao` / `123`（演示网格员）
+
+### 6. 启动管理员端（NEPM）
 
 ```bash
 cd nep-frontend-nepm
@@ -88,7 +99,7 @@ npm run dev
 访问：http://localhost:8083  
 账号：`admin` / `123`
 
-### 6. 启动决策者大屏（NEPV）
+### 7. 启动决策者大屏（NEPV）
 
 ```bash
 cd nep-frontend-nepv
@@ -120,6 +131,7 @@ DNUI-project/
 │       ├── patch_statistics_af_id.sql# 已有库升级补丁
 │       ├── init.sql / seed.sql       # 旧脚手架（已过时）
 ├── nep-frontend-neps/                # 公众监督员端
+├── nep-frontend-nepg/                # 网格员端
 ├── nep-frontend-nepm/                # 系统管理员端
 ├── nep-frontend-nepv/                # 决策者大屏
 ├── docs/

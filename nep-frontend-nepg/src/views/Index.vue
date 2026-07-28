@@ -1,10 +1,9 @@
 <template>
   <div class="index-page">
-    <!-- 欢迎横幅 -->
     <div class="welcome-banner">
       <div class="banner-content">
-        <h2 class="page-title">欢迎使用 NEPM 系统管理端</h2>
-        <p class="page-subtitle">东软环保公众监督系统 — 管理控制台</p>
+        <h2 class="page-title">欢迎使用 NEPG 网格员端</h2>
+        <p class="page-subtitle">东软环保公众监督系统 — 现场实测填报</p>
       </div>
       <div class="banner-decor">
         <div class="decor-circle c1"></div>
@@ -14,7 +13,7 @@
     </div>
 
     <el-row :gutter="20" class="stat-cards">
-      <el-col :span="8" v-for="card in statCards" :key="card.label">
+      <el-col :span="12" v-for="card in statCards" :key="card.label">
         <el-card shadow="hover" class="stat-card" @click="router.push(card.link)">
           <div class="stat-icon" :style="{ background: card.color }">
             <el-icon :size="28"><component :is="card.icon" /></el-icon>
@@ -34,62 +33,37 @@
 
 <script setup>
 import { useRouter } from 'vue-router'
-import { Document, Checked, DataBoard, PieChart, TrendCharts, Monitor, ArrowRight } from '@element-plus/icons-vue'
+import { List, Checked, ArrowRight } from '@element-plus/icons-vue'
+import { useUserStore } from '../store/user'
 
 const router = useRouter()
+const userStore = useUserStore()
 
 const statCards = [
   {
-    label: '公众监督数据',
-    desc: '查看和管理公众监督员反馈',
-    icon: Document,
+    label: '我的任务',
+    desc: '查看已指派的公众反馈并进入详情',
+    icon: List,
     color: 'linear-gradient(135deg, #43A047, #2E7D32)',
-    link: '/feedback/list',
+    link: '/grid/task',
   },
   {
-    label: '确认AQI数据',
-    desc: '查看网格员实测AQI数据',
+    label: '当前账号',
+    desc: userStore.gmName
+      ? `${userStore.gmName}（${userStore.gmCode}）`
+      : '登录后显示网格员信息',
     icon: Checked,
     color: 'linear-gradient(135deg, #66BB6A, #388E3C)',
-    link: '/confirmed/list',
-  },
-  {
-    label: '省分组统计',
-    desc: '各省分项超标累计统计',
-    icon: DataBoard,
-    color: 'linear-gradient(135deg, #FFB74D, #F57C00)',
-    link: '/statistics/province',
-  },
-  {
-    label: 'AQI分布统计',
-    desc: '空气质量指数级别分布',
-    icon: PieChart,
-    color: 'linear-gradient(135deg, #E57373, #D32F2F)',
-    link: '/statistics/distribution',
-  },
-  {
-    label: 'AQI趋势统计',
-    desc: '月度超标趋势变化',
-    icon: TrendCharts,
-    color: 'linear-gradient(135deg, #4FC3F7, #0288D1)',
-    link: '/statistics/trend',
-  },
-  {
-    label: '其它数据统计',
-    desc: '检测数量和网格覆盖率',
-    icon: Monitor,
-    color: 'linear-gradient(135deg, #BA68C8, #7B1FA2)',
-    link: '/statistics/other',
+    link: '/grid/task',
   },
 ]
 </script>
 
 <style scoped>
 .index-page {
-  max-width: 1200px;
+  max-width: 960px;
 }
 
-/* 欢迎横幅 */
 .welcome-banner {
   position: relative;
   background: linear-gradient(135deg, #1B5E20 0%, #2E7D32 40%, #43A047 100%);
@@ -148,7 +122,6 @@ const statCards = [
   letter-spacing: 1px;
 }
 
-/* 统计卡片 */
 .stat-cards {
   margin: 0 !important;
 }

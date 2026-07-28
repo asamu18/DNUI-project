@@ -276,8 +276,8 @@ public class GridMemberServiceImpl implements GridMemberService {
 
 
 
-        if (!feedback.getGmId()
-                .equals(gmId)) {
+        if (feedback.getGmId() == null
+                || !feedback.getGmId().equals(gmId)) {
 
 
             throw new BusinessException(
@@ -357,8 +357,8 @@ public class GridMemberServiceImpl implements GridMemberService {
 
 
 
-        if (!feedback.getGmId()
-                .equals(gmId)) {
+        if (feedback.getGmId() == null
+                || !feedback.getGmId().equals(gmId)) {
 
             throw new BusinessException(
                     "无权提交该任务"
@@ -368,10 +368,12 @@ public class GridMemberServiceImpl implements GridMemberService {
 
 
 
-        if (Integer.valueOf(2).equals(feedback.getState())) {
+        if (!Integer.valueOf(1).equals(feedback.getState())) {
 
             throw new BusinessException(
-                    "任务已经完成"
+                    Integer.valueOf(2).equals(feedback.getState())
+                            ? "任务已经完成"
+                            : "任务未指派，无法提交"
             );
 
         }
@@ -475,8 +477,11 @@ public class GridMemberServiceImpl implements GridMemberService {
         );
 
 
-        // 注意：PR审核要求
-        // fdId = task.telId
+        // 稳定关联键：af_id = 反馈单号；fd_id = 监督员电话
+        statistics.setAfId(
+                feedback.getAfId()
+        );
+
         statistics.setFdId(
                 feedback.getTelId()
         );
@@ -559,7 +564,7 @@ public class GridMemberServiceImpl implements GridMemberService {
 
 
 
-        if (id == null) {
+        if (id == null || !id.startsWith("gm_")) {
 
             throw new BusinessException(
                     "登录失效"
@@ -568,9 +573,15 @@ public class GridMemberServiceImpl implements GridMemberService {
         }
 
 
-        return Integer.parseInt(
-                id.replace("gm_", "")
-        );
+        try {
+            return Integer.parseInt(
+                    id.substring(3)
+            );
+        } catch (NumberFormatException e) {
+            throw new BusinessException(
+                    "登录失效"
+            );
+        }
 
     }
 

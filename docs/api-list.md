@@ -154,15 +154,52 @@
 | feedbackTime | `af_date` + ` ` + `af_time` |
 | status | `state`：0未指派 / 1已指派 / 2已确认 |
 
+### 1.6 网格员（NEPG）
+
+| 方法 | 路径 | 说明 | 权限 |
+|---|---|---|---|
+| POST | `/api/gridMember/login` | 网格员登录 | 无 |
+| GET | `/api/gridMember/byRegion` | 按省市查可用网格员 | 需 token |
+| GET | `/api/gridMember/list` | 全部网格员 | 需 token |
+| GET | `/api/gridMember/{gmId}` | 按 id 查网格员 | 需 token |
+| GET | `/api/gridMember/tasks?current=&size=` | 当前网格员任务分页 | 需 token（网格员） |
+| GET | `/api/gridMember/detail/{afId}` | 任务详情 | 需 token（网格员） |
+| POST | `/api/gridMember/submit` | 提交实测 AQI | 需 token（网格员） |
+
+**登录入参：** `{ "gmCode": "caocao", "password": "123" }`  
+**登录成功 data：**
+
+```json
+{ "token": "...", "gmId": 1, "gmName": "曹操", "gmCode": "caocao" }
+```
+
+> 不返回 `password`。Token 映射值为 `gm_{gmId}`。
+
+**提交入参**
+
+```json
+{ "afId": 1, "so2Value": 20, "coValue": 3, "spmValue": 50 }
+```
+
+写入 `statistics` 时必须包含：
+
+| 字段 | 来源 |
+|---|---|
+| `af_id` | 反馈单号 `aqi_feedback.af_id`（稳定关联键） |
+| `fd_id` | 监督员电话 `aqi_feedback.tel_id` |
+| `gm_id` | 登录网格员 |
+| `so2/co/spm_value` + `*_level` | 实测值 + 按 `aqi` 表算等级 |
+| `aqi_id` | 三项等级取 max |
+
+提交成功后：`aqi_feedback.state = 2`。仅 `state=1`（已指派）且归属当前网格员可提交。
+
 ---
 
 ## 2. 规划中接口（其他端）
 
 | 方法 | 路径 | 说明 | 角色 | 状态 |
 |---|---|---|---|---|
-| 网格员登录/任务 | `/api/...` | 基于 `grid_member` / `aqi_feedback.state` | 网格员 | 规划中 |
-| 管理员指派 | `/api/...` | 更新 `gm_id`/`state` | 管理员 | 规划中 |
-| 实测提交 | `/api/...` | 写入 `statistics` | 网格员 | 规划中 |
+| 管理员指派等管理接口 | 见管理员端实现 | 更新 `gm_id`/`state`、确认列表等 | 管理员 | 部分已实现（以代码为准） |
 
 ---
 
@@ -184,3 +221,4 @@
 | 2026-07-23 | 初版脚手架字段（已废弃） |
 | 2026-07-23 | NEPS 联调（旧表结构） |
 | 2026-07-24 | **切换官方 `nep.sql`**：实体/接口映射对齐；密码改明文；`supervisorId`=手机号；同步本清单 |
+| 2026-07-28 | **网格员端 NEPG**：登录/任务/详情/提交；`statistics.af_id`+`fd_id` 对齐；端口 8082 |

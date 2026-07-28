@@ -67,7 +67,10 @@
       </el-descriptions>
 
 
-      <div style="margin-top:20px">
+      <div
+        v-if="task.state === 1"
+        style="margin-top:20px"
+      >
 
         <el-button
           type="primary"
@@ -77,6 +80,14 @@
         </el-button>
 
 
+      </div>
+
+
+      <div
+        v-else-if="task.state === 2"
+        style="margin-top:20px;color:#67C23A"
+      >
+        该任务已确认完成，无需再次提交。
       </div>
 
 
